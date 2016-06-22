@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/add_note_parent_layout"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/color_pallete_layout"
+        android:layout_width="match_parent"
+        android:padding="20dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/add_note_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/Red" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/select_color_button"
+                android:text="Select"
+                android:layout_alignParentRight="true"/>
+
+            <Button
+                android:id="@+id/color_one"
+                android:background="@color/Red"
+                android:layout_width="40dp"
+                android:layout_marginRight="10dp"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/select_color_button"/>
+
+            <Button
+                android:id="@+id/color_two"
+                android:background="@color/Blue"
+                android:layout_width="40dp"
+                android:layout_marginRight="10dp"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/color_one"/>
+
+            <Button
+                android:id="@+id/color_three"
+                android:background="@color/Green"
+                android:layout_width="40dp"
+                android:layout_marginRight="10dp"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/color_two"/>
+
+            <Button
+                android:id="@+id/color_four"
+                android:background="@color/Yellow"
+                android:layout_width="40dp"
+                android:layout_marginRight="10dp"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/color_three"/>
+
+            <Button
+                android:id="@+id/color_five"
+                android:background="@color/Purple"
+                android:layout_marginRight="10dp"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/color_four"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+
+
+</RelativeLayout>

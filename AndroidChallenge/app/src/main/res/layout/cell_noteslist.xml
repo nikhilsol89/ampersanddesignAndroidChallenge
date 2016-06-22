@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/cell_parent_layout"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:padding="5dp"
+    android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginRight="10dp"
+        android:text="this ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
+        android:id="@+id/cell_note_textview"/>
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/cell_note_cancel_iamgeview"
+        android:src="@drawable/ic_remove"/>
+
+</LinearLayout>

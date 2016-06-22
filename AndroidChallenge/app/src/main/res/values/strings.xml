@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">AndroidChallenge</string>
+    <string name="color_red">red</string>
+    <string name="color_blue">blue</string>
+    <string name="color_green">green</string>
+    <string name="color_yellow">yellow</string>
+    <string name="color_purple">purple</string>
+</resources>
