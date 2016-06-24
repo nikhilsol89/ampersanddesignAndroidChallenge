@@ -1,6 +1,5 @@
 package androidchallenge.nikhil.com.androidchallenge.activity;
 
-import android.animation.Animator;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;

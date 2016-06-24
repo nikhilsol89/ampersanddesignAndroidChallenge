@@ -1,26 +1,21 @@
 package androidchallenge.nikhil.com.androidchallenge.activity;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
-import android.support.design.widget.BottomSheetDialog;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import androidchallenge.nikhil.com.androidchallenge.Listeners.RemoveItemListener;
 import androidchallenge.nikhil.com.androidchallenge.R;
 import androidchallenge.nikhil.com.androidchallenge.adapters.NotesListAdapter;
-import androidchallenge.nikhil.com.androidchallenge.database.NotesDBHelper;
 import androidchallenge.nikhil.com.androidchallenge.model.NotesModel;
 
 import static androidchallenge.nikhil.com.androidchallenge.application.MainApplication.notesDBHelper;
@@ -69,9 +64,7 @@ public class ListNoteActivity extends AppCompatActivity implements RemoveItemLis
             public void onClick(View v) {
                 Intent intent = new Intent(ListNoteActivity.this, AddNoteActivity.class);
                 startActivity(intent);
-                overridePendingTransition(R.anim.push_down_in,R.anim.push_down_out);
-                //notesDBHelper.insertNames("noteeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee ");*/
-
+                overridePendingTransition(R.anim.push_down_in, R.anim.push_down_out);
             }
         });
     }
@@ -111,6 +104,7 @@ public class ListNoteActivity extends AppCompatActivity implements RemoveItemLis
     public int getUniqueIdCorrespondingToPosition(int listItemPosition) {
         return notesDBHelper.getId(listItemPosition);
     }
+
     public class MovieTouchHelper extends ItemTouchHelper.SimpleCallback {
         private NotesListAdapter mNotesListAdapter;
 

@@ -16,20 +16,20 @@ import java.util.Random;
 
 import androidchallenge.nikhil.com.androidchallenge.Listeners.RemoveItemListener;
 import androidchallenge.nikhil.com.androidchallenge.R;
-import androidchallenge.nikhil.com.androidchallenge.database.NotesDBHelper;
 import androidchallenge.nikhil.com.androidchallenge.model.NotesModel;
 
 /**
  * Created by Nikhil on 22-06-2016.
  */
 
-public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.MyViewHolder>{
+public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.MyViewHolder> {
 
     Context context;
-    private int lastPosition=-1;
+    private int lastPosition = -1;
     ArrayList<NotesModel> notes;
     RemoveItemListener listener;
-    public NotesListAdapter(Context context,ArrayList<NotesModel> notes,RemoveItemListener listener){
+
+    public NotesListAdapter(Context context, ArrayList<NotesModel> notes, RemoveItemListener listener) {
         this.context = context;
         this.notes = notes;
         this.listener = listener;
@@ -37,24 +37,24 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.MyVi
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.cell_noteslist,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.cell_noteslist, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        setAnimation(holder.cellParentLayout,position);
-        holder.position=position;
+        setAnimation(holder.cellParentLayout, position);
+        holder.position = position;
         holder.notesTextView.setText(this.notes.get(position).getNote());
-        if(this.notes.get(position).getNoteColor().equalsIgnoreCase(context.getResources().getString(R.string.color_red)))
-                holder.cellParentLayout.setBackgroundColor(context.getResources().getColor(R.color.Red));
-        if(this.notes.get(position).getNoteColor().equalsIgnoreCase(context.getResources().getString(R.string.color_blue)))
-                holder.cellParentLayout.setBackgroundColor(context.getResources().getColor(R.color.Blue));
-        if(this.notes.get(position).getNoteColor().equalsIgnoreCase(context.getResources().getString(R.string.color_green)))
-                holder.cellParentLayout.setBackgroundColor(context.getResources().getColor(R.color.Green));
-        if(this.notes.get(position).getNoteColor().equalsIgnoreCase(context.getResources().getString(R.string.color_yellow)))
+        if (this.notes.get(position).getNoteColor().equalsIgnoreCase(context.getResources().getString(R.string.color_red)))
+            holder.cellParentLayout.setBackgroundColor(context.getResources().getColor(R.color.Red));
+        if (this.notes.get(position).getNoteColor().equalsIgnoreCase(context.getResources().getString(R.string.color_blue)))
+            holder.cellParentLayout.setBackgroundColor(context.getResources().getColor(R.color.Blue));
+        if (this.notes.get(position).getNoteColor().equalsIgnoreCase(context.getResources().getString(R.string.color_green)))
+            holder.cellParentLayout.setBackgroundColor(context.getResources().getColor(R.color.Green));
+        if (this.notes.get(position).getNoteColor().equalsIgnoreCase(context.getResources().getString(R.string.color_yellow)))
             holder.cellParentLayout.setBackgroundColor(context.getResources().getColor(R.color.Yellow));
-        if(this.notes.get(position).getNoteColor().equalsIgnoreCase(context.getResources().getString(R.string.color_purple)))
+        if (this.notes.get(position).getNoteColor().equalsIgnoreCase(context.getResources().getString(R.string.color_purple)))
             holder.cellParentLayout.setBackgroundColor(context.getResources().getColor(R.color.Purple));
     }
 
@@ -63,7 +63,7 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.MyVi
         return this.notes.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder {
 
         LinearLayout cellParentLayout;
         TextView notesTextView;
@@ -75,7 +75,7 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.MyVi
             super(itemView);
 
             this.view = itemView;
-            this.cellParentLayout = (LinearLayout)view.findViewById(R.id.cell_parent_layout);
+            this.cellParentLayout = (LinearLayout) view.findViewById(R.id.cell_parent_layout);
             this.notesTextView = (TextView) view.findViewById(R.id.cell_note_textview);
             this.cancelNotesImageView = (ImageView) view.findViewById(R.id.cell_note_cancel_iamgeview);
 
