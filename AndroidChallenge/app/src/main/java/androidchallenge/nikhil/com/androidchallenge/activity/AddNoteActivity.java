@@ -1,25 +1,27 @@
 package androidchallenge.nikhil.com.androidchallenge.activity;
 
+import android.animation.Animator;
+import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidchallenge.nikhil.com.androidchallenge.R;
 
 import static androidchallenge.nikhil.com.androidchallenge.application.MainApplication.notesDBHelper;
 
 /**
- * Created by charurani on 23-06-2016.
+ * Created by Nikhil on 23-06-2016.
  */
 
-public class AddNoteActivity extends AppCompatActivity {
+public class AddNoteActivity extends Activity {
 
     RelativeLayout parentLayout;
     Button colorRed, colorBlue, colorGreen, colorYellow, colorPurple, selectColor;
@@ -28,10 +30,35 @@ public class AddNoteActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setTheme(android.R.style.Theme_Dialog);
         setContentView(R.layout.activity_addnote);
+
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL, WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH, WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH);
 
         initViews();
         setUpClickListeners();
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        // If we've received a touch notification that the user has touched
+        // outside the app, finish the activity.
+        if (MotionEvent.ACTION_OUTSIDE == event.getAction()) {
+            finish();
+            return true;
+        }
+
+        // Delegate everything else to Activity.
+        return super.onTouchEvent(event);
+    }
+
+    @Override
+    public void setFinishOnTouchOutside(boolean finish) {
+        super.setFinishOnTouchOutside(true);
+
     }
 
     private void initViews() {
@@ -99,7 +126,7 @@ public class AddNoteActivity extends AppCompatActivity {
                     color = getResources().getString(R.string.color_purple);
                 }
 
-                notesDBHelper.insertContact(noteTextview.getText().toString(), color);
+                notesDBHelper.insertNames(noteTextview.getText().toString().trim(), color);
 
                 AddNoteActivity.this.finish();
             }

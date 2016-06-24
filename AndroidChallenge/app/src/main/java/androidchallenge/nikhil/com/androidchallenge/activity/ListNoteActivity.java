@@ -1,19 +1,23 @@
 package androidchallenge.nikhil.com.androidchallenge.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
 import java.util.Random;
 
+import androidchallenge.nikhil.com.androidchallenge.Listeners.RemoveItemListener;
 import androidchallenge.nikhil.com.androidchallenge.R;
 import androidchallenge.nikhil.com.androidchallenge.adapters.NotesListAdapter;
 import androidchallenge.nikhil.com.androidchallenge.database.NotesDBHelper;
@@ -21,13 +25,11 @@ import androidchallenge.nikhil.com.androidchallenge.model.NotesModel;
 
 import static androidchallenge.nikhil.com.androidchallenge.application.MainApplication.notesDBHelper;
 
-public class ListNoteActivity extends AppCompatActivity {
+public class ListNoteActivity extends AppCompatActivity implements RemoveItemListener {
 
     FloatingActionButton addNoteButton;
     RecyclerView notesList;
     NotesListAdapter listAdapter;
-
-
     ArrayList<NotesModel> notes;
 
     @Override
@@ -47,8 +49,13 @@ public class ListNoteActivity extends AppCompatActivity {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         notesList.setLayoutManager(layoutManager);
         notesList.setItemAnimator(new DefaultItemAnimator());
-        listAdapter = new NotesListAdapter(this, notes);
+        listAdapter = new NotesListAdapter(this, notes, this);
         notesList.setAdapter(listAdapter);
+
+
+        ItemTouchHelper.Callback callback = new MovieTouchHelper(listAdapter);
+        ItemTouchHelper helper = new ItemTouchHelper(callback);
+        helper.attachToRecyclerView(notesList);
     }
 
     private void initViews() {
@@ -62,12 +69,18 @@ public class ListNoteActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ListNoteActivity.this, AddNoteActivity.class);
                 startActivity(intent);
-                //notesDBHelper.insertContact("noteeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee ");
+                overridePendingTransition(R.anim.push_down_in,R.anim.push_down_out);
+                //notesDBHelper.insertNames("noteeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee ");*/
+
             }
         });
     }
 
     private void fetchDataFromDB() {
+        if (notes != null && notes.size() > 0) {
+            notes.clear();
+        }
+
         Cursor cursor = notesDBHelper.getData();
         if (cursor != null && cursor.getCount() > 0) {
             while (cursor.moveToNext()) {
@@ -87,4 +100,39 @@ public class ListNoteActivity extends AppCompatActivity {
         fetchDataFromDB();
         this.listAdapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void removeFromList(int listItemPosition) {
+        notesDBHelper.removeFromDB(getUniqueIdCorrespondingToPosition(listItemPosition));
+        fetchDataFromDB();
+        this.listAdapter.notifyDataSetChanged();
+    }
+
+    public int getUniqueIdCorrespondingToPosition(int listItemPosition) {
+        return notesDBHelper.getId(listItemPosition);
+    }
+    public class MovieTouchHelper extends ItemTouchHelper.SimpleCallback {
+        private NotesListAdapter mNotesListAdapter;
+
+        public MovieTouchHelper(NotesListAdapter NotesListAdapter) {
+            super(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
+            this.mNotesListAdapter = NotesListAdapter;
+        }
+
+        @Override
+        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+            //TODO: Not implemented here
+            return false;
+        }
+
+        @Override
+        public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+            //Remove item
+            notesDBHelper.removeFromDB(getUniqueIdCorrespondingToPosition(viewHolder.getAdapterPosition()));
+            //notesDBHelper.deleteNote(notes.get(viewHolder.getAdapterPosition()).getNote(), notes.get(viewHolder.getAdapterPosition()).getNoteDate(), notes.get(viewHolder.getAdapterPosition()).getNoteColor());
+            mNotesListAdapter.remove(viewHolder.getAdapterPosition());
+        }
+    }
+
+
 }

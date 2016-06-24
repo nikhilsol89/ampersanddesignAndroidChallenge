@@ -3,7 +3,7 @@ package androidchallenge.nikhil.com.androidchallenge.model;
 import java.io.Serializable;
 
 /**
- * Created by charurani on 22-06-2016.
+ * Created by Nikhil on 22-06-2016.
  */
 
 public class NotesModel implements Serializable {

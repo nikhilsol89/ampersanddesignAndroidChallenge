@@ -5,11 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.Date;
 
 /**
- * Created by charurani on 22-06-2016.
+ * Created by Nikhil on 22-06-2016.
  */
 
 public class NotesDBHelper extends SQLiteOpenHelper {
@@ -47,7 +48,16 @@ public class NotesDBHelper extends SQLiteOpenHelper {
         return res;
     }
 
-    public boolean insertContact(String note,String color) {
+    public int getId(int listItemPosition){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery(NotesDBMetaData.FETCH_DATA_NOTES, null);
+        Log.e("nikhil","Movement :"+res.moveToPosition(listItemPosition));
+        return res.getInt(res.getColumnIndex(NotesDBMetaData.COLUMN_ID));
+    }
+
+
+
+    public boolean insertNames(String note, String color) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(NotesDBMetaData.COLUMN_NOTE, note);
@@ -56,4 +66,16 @@ public class NotesDBHelper extends SQLiteOpenHelper {
         db.insert(NotesDBMetaData.TABLE_NOTES, null, contentValues);
         return true;
     }
+
+    public int removeFromDB(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(NotesDBMetaData.TABLE_NOTES,NotesDBMetaData.COLUMN_ID +"=? ",new String[]{id+""});
+    }
+
+    public void deleteNote(String note,String color, String date){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(NotesDBMetaData.TABLE_NOTES,NotesDBMetaData.COLUMN_NOTE +" =? and " +NotesDBMetaData.COLUMN_NOTE_DATE
+                +" =? and " +NotesDBMetaData.COLUMN_NOTE_COLOR+" =?" ,new String[]{note,color,date});
+    }
+
 }
